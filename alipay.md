@@ -28,7 +28,7 @@ money | float | 商户余额 元
 
     {
         code: 0,
-        message: 'ok',
+        message : 'ok',
         result: [{
             store_id: 1,
             money: 100.05
