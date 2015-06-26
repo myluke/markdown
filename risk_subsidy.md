@@ -11,6 +11,7 @@
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
 page_no | int | 是 | 页码,从1开始
+limit | int | 否 | 每页显示条数,不传默认10,最大30
 type | string | 是 | 列表类型(`SUCCESS -> 成功 FAIL -> 失败 AUDIT -> 放款审核 `)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
@@ -30,56 +31,30 @@ reason | string | 失败原因
 
 **返回示例：**
 
-    type == AUDIT
     {
         code: 0,
         message: 'ok',
         result: [
                 {
-                    id: 100,
-                    subdisy: 7.0,
-                    finish_at: '2015-06-19 10:24:00'
-                },
-                {
-                    id: 100,
-                    subdisy: 7.0,
-                    finish_at: '2015-06-19 10:24:00'
-                }
-        ]
-    }
-    type == SUCCESS
-    {
-        code: 0,
-        message: 'ok',
-        result: [
-                {
-                    id: 100,
-                    subdisy: 7.0,
-                    finish_day: '2015-06-19'
-                },
-                {
-                    id: 100,
-                    subdisy: 7.0,
-                    finish_day: '2015-06-19'
-                }
-        ]
-    }
-    type == FAIL
-    {
-        code: 0,
-        message: 'ok',
-        result: [
-                {
-                    id: 100,
+                    id: 101,
                     subdisy: 7.0,
                     finish_day: '2015-06-19',
+                    finish_at: '2015-06-19 10:24:00',
                     reason: '小票不清晰'
                 },
                 {
                     id: 100,
                     subdisy: 7.0,
                     finish_day: '2015-06-19',
+                    finish_at: '2015-06-19 10:24:00',
                     reason: '商家投诉成立'
+                },
+                {
+                    id: 102,
+                    subdisy: 7.0,
+                    finish_day: '2015-06-19',
+                    finish_at: '2015-06-19 10:24:00',
+                    reason: ''
                 }
         ]
     }
