@@ -11,7 +11,7 @@
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
 page_no | int | 是 | 页码,从1开始
-type | string | 是 | 列表类型(`SUCCESS -> 成功 || FAIL -> 失败 || AUDIT -> 放款审核 `)
+type | string | 是 | 列表类型(`SUCCESS -> 成功 FAIL -> 失败 AUDIT -> 放款审核 `)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
