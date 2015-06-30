@@ -12,7 +12,7 @@
 ----- | ---- | --- | ---------
 page_no | int | 是 | 页码,从1开始
 limit | int | 否 | 每页显示条数,不传默认10,最大30
-type | string | 是 | 列表类型(`SUCCESS -> 成功 FAIL -> 失败 AUDIT -> 放款审核 `)
+type | string | 是 | 列表类型(`SUCCESS -> 成功 FAIL -> 失败 PENDING -> 放款审核 `)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
