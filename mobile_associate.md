@@ -25,7 +25,7 @@ signature  | string | 是 | hmac sha1 计算签名
 ----- | --- | ---------
 id | int | 历史订单ID
 mobile | string | 完整的手机号码
-address | string | 地址(同一手机号码)
+address | array | 地址
 
 **返回示例：**
 
