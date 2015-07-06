@@ -172,7 +172,7 @@ money | float | 可充值金额 元
 
 **请求路径：** `/stores/{store_id}/money_url`
 
-**请求方法：** POST
+**请求方法：** GET
 
 **参数说明：**
 
