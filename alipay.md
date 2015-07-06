@@ -287,7 +287,8 @@ created_at | string | 创建时间
                     type: 'ORDER_PAY',
                     order_no: '1435053149',
                     balance: 1024.2,
-                    created_at: '2015-06-19 10:24:00'
+                    created_at: '2015-06-19 10:24:00',
+                    desc: '运费支付-交易成功'
                 },
                 {
                     id: 95,
@@ -297,17 +298,19 @@ created_at | string | 创建时间
                     type: 'CHARGE',
                     order_no: '51pay201506191000001024',
                     balance: 1124.2,
-                    created_at: '2015-06-19 10:00:00'
+                    created_at: '2015-06-19 10:00:00',
+                    desc: '在线充值-交易成功'
                 },
                 {
                     id: 90,
                     fund_id: 2,
                     money: 3,
                     money_type: '-'
-                    type: 'ORDER_PAY',
+                    type: 'WITHDRAW',
                     order_no: '1435053149',
                     balance: 521.2,
-                    created_at: '2015-06-18 18:24:00'
+                    created_at: '2015-06-18 18:24:00',
+                    desc: '提现-提现成功'
                 },
                 {
                     id: 89,
@@ -317,7 +320,8 @@ created_at | string | 创建时间
                     type: 'ORDER_REFUND',
                     order_no: '51refund201506181100001024',
                     balance: 524.2,
-                    created_at: '2015-06-18 11:00:00'
+                    created_at: '2015-06-18 11:00:00',
+                    desc: '运费支付-退款成功'
                 }
         ]
     }
