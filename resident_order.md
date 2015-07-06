@@ -47,16 +47,17 @@ income | string | 总收入(1000元/1.2万)
     }
 
 
-### 2. 发布订单
+### 2. 发布(编辑)订单
 
-**请求路径：** `/couriers/{user_id}/order`
+**请求路径：** `/couriers/{user_id}/resident_order`
 
-**请求方法：** GET
+**请求方法：** POST 可批量
 
 **参数说明：**
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
+order_data | string | 是 | json数组(编辑时传入ID即可)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -67,54 +68,23 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
-store_id | int | 商家ID
-store_name | string | 商店名
-store_mobile | string | 商店注册电话
-store_address | string | 商店地址
-days | string | 驻店时间(7天/1年23天)
-order_count | string | 完成驻店订单(100单/1.5万单)
-income | string | 总收入(1000元/1.2万)
+id | int | 订单ID
+order_image | string | 订单小票图片
+recipient_phone | string | 收货人电话
 
-**返回示例：**
+**输入json示例：**
 
-    {
-        code: 0,
-        message: 'ok',
-        result: {
-            store_id: 1,
-            store_name: '黄焖鸡米饭很好吃哟',
-            store_mobile: '13709800011',
-            store_address: '东方路1217号',
-            days: '100天',
-            order_count: '100单',
-            income: '1234元',
+    [
+        {
+            order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+            recipient_phone: '13701816554'
+        },
+        {
+            id: 1,
+            order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+            recipient_phone: '13701816555'
         }
-    }
-
-## 商户充值模块
-
-### 1. 查询商户余额
-
-**请求路径：** `/stores/{store_id}/money`
-
-**请求方法：** GET
-
-**参数说明：**
-
-参数名 | 类型 | 必选 | 示例及描述
------ | ---- | --- | ---------
-token  | string | 是 | 用户令牌
-app_id | string | 是 | app id，系统分配
-nonce | int | 是 | 随机正整数
-timestamp  | int | 是 | 请求时间戳
-signature  | string | 是 | hmac sha1 计算签名
-
-**返回值说明：**
-
-参数名 | 类型 | 示例及描述
------ | --- | ---------
-store_id | int | 商户ID
-money | float | 商户余额 元
+    ]
 
 
 **返回示例：**
@@ -122,131 +92,24 @@ money | float | 商户余额 元
     {
         code: 0,
         message: 'ok',
-        result: {
-            store_id: 1,
-            money: 100.05
-        }
-    }
-
-
-### 2. 获取充值金额列表
-
-**请求路径：** `/stores/{store_id}/money_list`
-
-**请求方法：** GET
-
-**参数说明：**
-
-参数名 | 类型 | 必选 | 示例及描述
------ | ---- | --- | ---------
-token  | string | 是 | 用户令牌
-app_id | string | 是 | app id，系统分配
-nonce | int | 是 | 随机正整数
-timestamp  | int | 是 | 请求时间戳
-signature  | string | 是 | hmac sha1 计算签名
-
-**返回值说明：**
-
-参数名 | 类型 | 示例及描述
------ | --- | ---------
-store_id | int | 商户ID
-money | float | 可充值金额 元
-
-
-**返回示例：**
-
-    {
-        code: 0,
-        message: 'ok',
-        result: {
-            store_id: 1,
-            money_list: {
-                100,
-                200,
-                500
-                }
-        }
-    }
-
-
-### 3. 获取充值url(APP内部根据返回值发起充值请求)
-
-**请求路径：** `/stores/{store_id}/money_url`
-
-**请求方法：** GET
-
-**参数说明：**
-
-参数名 | 类型 | 必选 | 示例及描述
------ | ---- | --- | ---------
-money  | int | 是 | 充值金额 元
-token  | string | 是 | 用户令牌
-app_id | string | 是 | app id，系统分配
-nonce | int | 是 | 随机正整数
-timestamp  | int | 是 | 请求时间戳
-signature  | string | 是 | hmac sha1 计算签名
-
-**返回值说明：**
-
-参数名 | 类型 | 示例及描述
------ | --- | ---------
-store_id | int | 商户ID
-url | string | 充值url
-
-
-**返回示例：**
-
-    {
-        code: 0,
-        message: 'ok',
-        result: {
-            store_id: 1,
-            order_no: '51pay201506191144340897'
-            url: "_input_charset=\"utf-8\"&body=\"安居客订单：CUSR20150619043863\"&it_b_pay=\"30m\"&notify_url=\"http://my.anjuke.com/acenter/alipay/sdk/notify/\"&out_trade_no=\"ac347836314346853822574\"&partner=\"2088501178389921\"&payment_type=\"1\"&seller_id=\"ajkzf@anjukeinc.com\"&service=\"mobile.securitypay.pay\"&show_url=\"m.alipay.com\"&subject=\"支付宝购买\"&total_fee=\"120\"&sign=\"gPqHrl8%2BNUNaqUBUdi9VtxNmOHyGIgPpy380viy%2BO%2F5Pjxp0wii4VAER%2F8VBemm4L8AS32sgAblj8kNtLIx8AKRuZLgkIYgOyyeYULY%2BkU7Ertq%2FRdwAsXG%2FK5eTxxpAXn15P5ed6%2B3zyPFBLS3ueiDHlTjnA3RDY8kAs26CeFY%3D\"&sign_type=\"RSA\""
-        }
-    }
-
-### 4. 获取订单充值的结果(APP内部根据接口3返回值 order_no 获取充值结果)
-
-**请求路径：** `/stores/{store_id}/money_result`
-
-**请求方法：** GET
-
-**参数说明：**
-
-参数名 | 类型 | 必选 | 示例及描述
------ | ---- | --- | ---------
-order_no  | string | 是 | 充值订单号
-token  | string | 是 | 用户令牌
-app_id | string | 是 | app id，系统分配
-nonce | int | 是 | 随机正整数
-timestamp  | int | 是 | 请求时间戳
-signature  | string | 是 | hmac sha1 计算签名
-
-**返回值说明：**
-
-参数名 | 类型 | 示例及描述
------ | --- | ---------
-store_id | int | 商户ID
-order_no | string | 充值订单号
-money_result | string | 充值结果 (SUCCESS 或者 NORMAL)
-
-
-**返回示例：**
-
-    {
-        code: 0,
-        message: 'ok',
-        result: {
-            store_id: 1,
-            order_no: '51pay201506191144340897'
-            money_result: "SUCCESS"
+        result: [
+            {
+                id: 2,
+                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                recipient_phone: '13701816554'
+            },
+            {
+                id: 1,
+                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                recipient_phone: '13701816555'
             }
+        ]
     }
 
-### 5. 获取资金明细
 
-**请求路径：** `/stores/{store_id}/money_log`
+### 3. 订单列表(包含搜索)
+
+**请求路径：** `/couriers/{user_id}/resident_list`
 
 **请求方法：** GET
 
@@ -254,6 +117,262 @@ money_result | string | 充值结果 (SUCCESS 或者 NORMAL)
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
+type | string | 否 | 类型( ENROUTE (配送中) / WAITCOMMIT(待完善) / REJECT(商家拒绝) )
+mobile | string | 否 | 收货人手机号码(查询条件)
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+id | int | 订单编号
+order_image | string | 订单小票图片
+recipient_phone | string | 收货人电话
+recipient_address | string | 收货人地址
+amount | float | 货品价值
+delivery_freight | float | 配送费
+created_at | string | 创建时间
+enroute_at | string | 配送送达时间
+status | string | 订单状态 见注释
+type | string | 类型( ENROUTE (配送中) / WAITCOMMIT(待完善) / REJECT(商家拒绝) )
+allege_result | string | 申述结果
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: [
+            {
+                id: 1,
+                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                recipient_phone: '13701816554',
+                created_at: '2015-07-06 11:11:11',
+                recipient_address: '',
+                amount: 0,
+                delivery_freight: 0,
+                enroute_at: '0000-00-00 00:00:00',
+                status: '',
+                type: 'ENROUTE',
+                allege_result: ''
+            },
+            {
+                id: 2,
+                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                recipient_phone: '13701816554',
+                created_at: '2015-07-06 11:11:12',
+                recipient_address: '淞沪路100号',
+                amount: 20,
+                delivery_freight: 3,
+                enroute_at: '2015-07-06 12:00:00',
+                status: '',
+                type: 'REJECT',
+                allege_result: '申述成功'
+            }
+        ]
+    }
+
+
+### 4. 确认送达
+
+**请求路径：** `/couriers/{user_id}/{order_id}/resident_confirm`
+
+**请求方法：** POST
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+courier_lng | string | 是 | 经度
+courier_lat | string | 是 | 纬度
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok'
+    }
+
+
+### 5. 完善订单信息
+
+**请求路径：** `/couriers/{user_id}/{order_id}/residnet_commit`
+
+**请求方法：** POST
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+amount | float | 是 | 物品金额
+recipient_address | string | 是 | 收货人地址
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok'
+    }
+
+
+### 6. 删除/提交申述 订单
+
+**请求路径：** `/couriers/{user_id}/{order_id}/resident_handle`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+handle_type  | string | 是 | 处理(delete 删除 / allege 申述)
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok'
+    }
+
+## 商户端
+
+### 1. 驻店人员信息
+
+**请求路径：** `/stores/{store_id}/resident`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+courier_id | int | 配送员ID
+courier_name | string | 配送员姓名
+courier_mobile | string | 配送员手机
+courier_number | string | 配送员身份证号
+resident_date | string | 配送员入驻日期
+finished_order | int | 已完成驻店订单数
+
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: [
+            {
+                courier_id: 1,
+                courier_name: '卢先生'
+                courier_mobile: '13701819999',
+                courier_number: '412723199011219820',
+                resident_date: '2015-07-01',
+                finished_order: 50
+            },
+            {
+                courier_id: 2,
+                courier_name: '魏先生'
+                courier_mobile: '13701819990',
+                courier_number: '412723199011245610',
+                resident_date: '2015-07-02',
+                finished_order: 60
+            }
+        ]
+    }
+
+### 2. 待确认订单汇总列表
+
+**请求路径：** `/stores/{store_id}/resident_sum`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+id | int | 订单编号
+order_image | string | 订单小票图片
+recipient_phone | string | 收货人电话
+recipient_address | string | 收货人地址
+amount | float | 货品价值
+delivery_freight | float | 配送费
+created_at | string | 创建时间
+enroute_at | string | 配送送达时间
+status | string | 订单状态 见注释
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: [
+            {
+                courier_id: 1,
+                courier_name: '卢先生'
+                courier_mobile: '13701819999',
+                order_num: 100,
+                order_money_sum: 1000
+            },
+            {
+                courier_id: 2,
+                courier_name: '魏先生'
+                courier_mobile: '13701819990',
+                order_num: 100,
+                order_money_sum: 1000
+            }
+        ]
+    }
+
+### 3. 某配送员待确认订单
+
+**请求路径：** `/stores/{store_id}/{courier_id}/resident_order`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+recipient_phone  | string | 是 | 收货人手机号码(搜索)
 page_no  | int | 是 | 页码
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
@@ -265,14 +384,11 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
-id | int | 日志ID
-fund_id | int | 账户ID
-money | float | 金额
-money_type | string | 金额类型( + 加钱 - 减钱 )
-type | string | 变动类型 (CHARGE 充值+ ORDER_PAY 订单运费支付- ORDER_REFUND 订单运费退还+ WITHDRAW 提现-)
-order_no | string | 订单流水号码(充值订单号/货运订单ID/提现订单号)
-balance | float | 操作后账户余额
-created_at | string | 创建时间
+courier_id | int | 配送员ID
+courier_name | string | 配送员姓名
+courier_mobile | string | 配送员手机
+order_num | int | 配送员总单数
+order_money_sum | int | 配送员总配送费
 
 **返回示例：**
 
@@ -280,79 +396,65 @@ created_at | string | 创建时间
         code: 0,
         message: 'ok',
         result: [
-                {
-                    id: 100,
-                    fund_id: 2,
-                    money: 3,
-                    money_type: '-'
-                    type: 'ORDER_PAY',
-                    order_no: '1435053149',
-                    balance: 1024.2,
-                    created_at: '2015-06-19 10:24:00',
-                    desc: '运费支付-交易成功'
-                },
-                {
-                    id: 95,
-                    fund_id: 2,
-                    money: 100,
-                    money_type: '+'
-                    type: 'CHARGE',
-                    order_no: '51pay201506191000001024',
-                    balance: 1124.2,
-                    created_at: '2015-06-19 10:00:00',
-                    desc: '在线充值-交易成功'
-                },
-                {
-                    id: 90,
-                    fund_id: 2,
-                    money: 3,
-                    money_type: '-'
-                    type: 'WITHDRAW',
-                    order_no: '1435053149',
-                    balance: 521.2,
-                    created_at: '2015-06-18 18:24:00',
-                    desc: '提现-提现成功'
-                },
-                {
-                    id: 89,
-                    fund_id: 2,
-                    money: 500,
-                    money_type: '-'
-                    type: 'ORDER_REFUND',
-                    order_no: '51refund201506181100001024',
-                    balance: 524.2,
-                    created_at: '2015-06-18 11:00:00',
-                    desc: '运费支付-退款成功'
-                }
+            {
+                id: 1,
+                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                recipient_phone: '13701816554',
+                created_at: '2015-07-06 11:11:11',
+                recipient_address: '东方路1000号',
+                amount: 30,
+                delivery_freight: 5,
+                enroute_at: '2015-07-05 12:46:00',
+                status: ''
+            },
+            {
+                id: 2,
+                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                recipient_phone: '13701816554',
+                created_at: '2015-07-06 11:11:12',
+                recipient_address: '淞沪路100号',
+                amount: 20,
+                delivery_freight: 3,
+                enroute_at: '2015-07-06 12:00:00',
+                status: ''
+            }
         ]
     }
 
+### 4. 商户确认/拒绝订单(可批量)
 
-## 补充说明
+**请求路径：** `/stores/{store_id}/resident_confirm`
 
-### 1. 订单 status 说明
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+order_id | string | 是 | 订单ID，逗号分隔
+handle_type | string | 是 | 操作类型( REJECT / PASS )
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok'
+    }
+
+
+
+## 订单 status 说明
 
 参数名 | 状态 | 描述
 ----- | --- | ---------
-DRAFTED | 待发布 | 草稿种，还没发布
-PUBLISHED | 待接单 | 已经发布，只有这种状态的可以抢
-PICKUP | 待取货 | 已经接单，还没有取货
-ENROUTE | 配送中 | 已经取货，正在配送
-FINISHED | 已完成 | 客户已确认，配送完成
-DELETED | 已删除 | 已经删除
-
-
-### 2 审核 status 说明
-
-当某个状态没有返回数据的时候，说明这个数据还没有提交
-
-例如： 取不到身份验证状态，说明用户还没有提交
-
-参数名 | 状态 | 描述
------ | --- | ---------
-NORMAL | 初始状态 | 初始状态，默认状态
-PENDING | 待审核 | 用户已经提交，等待工作人员审核
-APPROVED | 审核通过 | 已经审核通过
-APPROVING | 审核中 | 审核中，复核种，都是一个意思
-REJECTED | 审核不通过 | 被拒绝了，没有审核通过
-DELETED | 已删除 | 已经删除
+PUBLISHED | 配送中 | 订单已经发布，还没确认送达
+COMMITED | 待完善 | 已确认送达，还没有完善订单信息
+CONFIRMED | 待商户确认 | 已经完善订单信息，商户还没有确认
+REJECT | 商户拒绝 | 商户审核完成之后，拒绝订单
+PASSED | 商户通过 | 商户审核完成之后，通过订单
