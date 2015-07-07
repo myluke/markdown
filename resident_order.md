@@ -126,7 +126,7 @@ recipient_address | string | 收货人地址
 amount | float | 货品价值
 delivery_freight | float | 配送费
 created_at | string | 创建时间
-enrouted_at | string | 配送送达时间
+commit_at | string | 配送送达时间
 status | string | 订单状态 见注释
 allege_result | string | 申述结果（申述信息）
 count | int | 该分类下订单数量
@@ -145,9 +145,8 @@ count | int | 该分类下订单数量
                 recipient_address: '',
                 amount: 0,
                 delivery_freight: 0,
-                enrouted_at: '0000-00-00 00:00:00',
+                commit_at: '0000-00-00 00:00:00',
                 status: '',
-                type: 'ENROUTE',
                 allege_result: ''
             },
             {
@@ -160,7 +159,6 @@ count | int | 该分类下订单数量
                 delivery_freight: 3,
                 enroute_at: '2015-07-06 12:00:00',
                 status: '',
-                type: 'REJECTED',
                 allege_result: '申述成功'
             }],
             count: 56
@@ -403,7 +401,7 @@ recipient_address | string | 收货人地址
 amount | float | 货品价值
 delivery_freight | float | 配送费
 created_at | string | 创建时间
-enrouted_at | string | 配送送达时间
+commit_at | string | 配送送达时间
 status | string | 订单状态 见注释
 
 **返回示例：**
@@ -420,7 +418,7 @@ status | string | 订单状态 见注释
                 recipient_address: '东方路1000号',
                 amount: 30,
                 delivery_freight: 5,
-                enrouted_at: '2015-07-05 12:46:00',
+                commit_at: '2015-07-05 12:46:00',
                 status: ''
             },
             {
@@ -431,7 +429,7 @@ status | string | 订单状态 见注释
                 recipient_address: '淞沪路100号',
                 amount: 20,
                 delivery_freight: 3,
-                enrouted_at: '2015-07-06 12:00:00',
+                commit_at: '2015-07-06 12:00:00',
                 status: ''
             }
         ]
