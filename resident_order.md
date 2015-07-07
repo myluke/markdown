@@ -71,18 +71,18 @@ signature  | string | 是 | hmac sha1 计算签名
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
 id | int | 订单ID
-order_image | string | 订单小票图片
+receipt_image | string | 订单小票图片
 recipient_phone | string | 收货人电话
 
 **输入json示例：**
 
     [
         {
-            order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+            receipt_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
             recipient_phone: '13701816554'
         },
         {
-            order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+            receipt_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
             recipient_phone: '13701816555'
         }
     ]
@@ -120,7 +120,7 @@ signature  | string | 是 | hmac sha1 计算签名
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
 id | int | 订单编号
-order_image | string | 订单小票图片
+receipt_image | string | 订单小票图片
 recipient_phone | string | 收货人电话
 recipient_address | string | 收货人地址
 amount | float | 货品价值
@@ -139,7 +139,7 @@ count | int | 该分类下订单数量
         result: {
             orders: [{
                 id: 1,
-                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                receipt_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
                 recipient_phone: '13701816554',
                 created_at: '2015-07-06 11:11:11',
                 recipient_address: '',
@@ -152,7 +152,7 @@ count | int | 该分类下订单数量
             },
             {
                 id: 2,
-                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                receipt_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
                 recipient_phone: '13701816554',
                 created_at: '2015-07-06 11:11:12',
                 recipient_address: '淞沪路100号',
@@ -397,7 +397,7 @@ signature  | string | 是 | hmac sha1 计算签名
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
 id | int | 订单编号
-order_image | string | 订单小票图片
+receipt_image | string | 订单小票图片
 recipient_phone | string | 收货人电话
 recipient_address | string | 收货人地址
 amount | float | 货品价值
@@ -414,7 +414,7 @@ status | string | 订单状态 见注释
         result: [
             {
                 id: 1,
-                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                receipt_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
                 recipient_phone: '13701816554',
                 created_at: '2015-07-06 11:11:11',
                 recipient_address: '东方路1000号',
@@ -425,7 +425,7 @@ status | string | 订单状态 见注释
             },
             {
                 id: 2,
-                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
+                receipt_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
                 recipient_phone: '13701816554',
                 created_at: '2015-07-06 11:11:12',
                 recipient_address: '淞沪路100号',
