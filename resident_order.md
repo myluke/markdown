@@ -141,14 +141,15 @@ created_at | string | 创建时间
 enrouted_at | string | 配送送达时间
 status | string | 订单状态 见注释
 allege_result | string | 申述结果（申述信息）
+count | int | 该分类下订单数量
 
 **返回示例：**
 
     {
         code: 0,
         message: 'ok',
-        result: [
-            {
+        result: {
+            orders: [{
                 id: 1,
                 order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
                 recipient_phone: '13701816554',
@@ -173,8 +174,9 @@ allege_result | string | 申述结果（申述信息）
                 status: '',
                 type: 'REJECTED',
                 allege_result: '申述成功'
-            }
-        ]
+            }],
+            count: 56
+        }
     }
 
 
