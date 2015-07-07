@@ -260,7 +260,7 @@ signature  | string | 是 | hmac sha1 计算签名
 
 ### 6. 订单申述
 
-**请求路径：** `/couriers/{user_id}/{order_id}/allege_order`
+**请求路径：** `/couriers/{user_id}/{order_id}/resident_allege`
 
 **请求方法：** POST (申述不填申述原因，已确认)
 
