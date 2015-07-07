@@ -453,7 +453,7 @@ status | string | 订单状态 见注释
 
 **请求路径：** `/stores/{store_id}/handle_order`
 
-**请求方法：** GET
+**请求方法：** POST
 
 **参数说明：**
 
@@ -475,6 +475,38 @@ signature  | string | 是 | hmac sha1 计算签名
         message: 'ok'
     }
 
+### 5. 本店待确认订单总数
+
+**请求路径：** `/stores/{store_id}/resident_count`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+count | int | 数量
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: {
+            count: 16
+        }
+    }
+
 
 
 ## 订单 status 说明
@@ -482,16 +514,6 @@ signature  | string | 是 | hmac sha1 计算签名
 参数名 | 状态 | 描述
 ----- | --- | ---------
 ENROUTE | 配送中 | 订单已经发布，还没确认送达
-COMMITED | 待完善 | 已确认送达，还没有完善订单信息
-CONFIRMED | 待商户确认 | 已经完善订单信息，商户还没有确认
-REJECTED | 商户拒绝 | 商户审核完成之后，拒绝订单
-FINISHED | 商户通过 | 商户审核完成之后，通过订单
-
-## 驻店关系表 status 说明
-
-参数名 | 状态 | 描述
------ | --- | ---------
-normal | 配送中 | 订单已经发布，还没确认送达
 COMMITED | 待完善 | 已确认送达，还没有完善订单信息
 CONFIRMED | 待商户确认 | 已经完善订单信息，商户还没有确认
 REJECTED | 商户拒绝 | 商户审核完成之后，拒绝订单
