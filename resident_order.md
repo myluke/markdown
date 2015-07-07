@@ -106,7 +106,7 @@ recipient_phone | string | 收货人电话
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-type | string | 是 | 类型( ENROUTE (配送中) / WAITCOMMIT(待完善) / WAITCONFIRM(待确认) / REJECTED(商家拒绝) )
+type | string | 是 | 类型( ENROUTE (配送中) / COMMITED(待完善) / CONFIRMED(待确认) / REJECTED(商家拒绝) )
 mobile | string | 否 | 收货人手机号码(查询条件)
 page | int | 否 | 非搜索时需要传入页码
 token  | string | 是 | 用户令牌
