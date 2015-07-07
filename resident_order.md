@@ -28,7 +28,7 @@ store_mobile | string | 商店注册电话
 store_address | string | 商店地址
 days | string | 驻店时间(7天/1年23天)
 order_count | string | 完成驻店订单(100单/1.5万单)
-income | string | 总收入(1000元/1.2万)
+money | string | 总收入(1000元/1.2万)
 
 **返回示例：**
 
@@ -42,12 +42,12 @@ income | string | 总收入(1000元/1.2万)
             store_address: '东方路1217号',
             days: '100天',
             order_count: '100单',
-            income: '1234元',
+            money: '1234元',
         }
     }
 
 
-### 2. 发布(编辑)订单
+### 2. 发布订单
 
 **请求路径：** `/couriers/{user_id}/resident_order`
 
@@ -57,6 +57,8 @@ income | string | 总收入(1000元/1.2万)
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
+courier_lng | string | 是 | 经度
+courier_lat | string | 是 | 纬度
 order_data | string | 是 | json数组(编辑时传入ID即可)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
@@ -80,7 +82,6 @@ recipient_phone | string | 收货人电话
             recipient_phone: '13701816554'
         },
         {
-            id: 1,
             order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
             recipient_phone: '13701816555'
         }
@@ -111,14 +112,15 @@ recipient_phone | string | 收货人电话
 
 **请求路径：** `/couriers/{user_id}/resident_list`
 
-**请求方法：** GET
+**请求方法：** GET 搜索条件为 在当前分类下根据收货人手机号搜索
 
 **参数说明：**
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-type | string | 否 | 类型( ENROUTE (配送中) / WAITCOMMIT(待完善) / REJECT(商家拒绝) )
+type | string | 是 | 类型( ENROUTE (配送中) / WAITCOMMIT(待完善) / WAITCONFIRM(待确认) / REJECTED(商家拒绝) )
 mobile | string | 否 | 收货人手机号码(查询条件)
+page | int | 否 | 非搜索时需要传入页码
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -136,10 +138,9 @@ recipient_address | string | 收货人地址
 amount | float | 货品价值
 delivery_freight | float | 配送费
 created_at | string | 创建时间
-enroute_at | string | 配送送达时间
+enrouted_at | string | 配送送达时间
 status | string | 订单状态 见注释
-type | string | 类型( ENROUTE (配送中) / WAITCOMMIT(待完善) / REJECT(商家拒绝) )
-allege_result | string | 申述结果
+allege_result | string | 申述结果（申述信息）
 
 **返回示例：**
 
@@ -155,7 +156,7 @@ allege_result | string | 申述结果
                 recipient_address: '',
                 amount: 0,
                 delivery_freight: 0,
-                enroute_at: '0000-00-00 00:00:00',
+                enrouted_at: '0000-00-00 00:00:00',
                 status: '',
                 type: 'ENROUTE',
                 allege_result: ''
@@ -170,14 +171,40 @@ allege_result | string | 申述结果
                 delivery_freight: 3,
                 enroute_at: '2015-07-06 12:00:00',
                 status: '',
-                type: 'REJECT',
+                type: 'REJECTED',
                 allege_result: '申述成功'
             }
         ]
     }
 
 
-### 4. 确认送达
+### 4. 删除配送中订单
+
+**请求路径：** `/couriers/{user_id}/{order_id}/resident_delete`
+
+**请求方法：** POST
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+courier_lng | string | 是 | 经度
+courier_lat | string | 是 | 纬度
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok'
+    }
+
+
+### 5. 确认送达
 
 **请求路径：** `/couriers/{user_id}/{order_id}/resident_confirm`
 
@@ -229,17 +256,17 @@ signature  | string | 是 | hmac sha1 计算签名
     }
 
 
-### 6. 删除/提交申述 订单
+### 6. 删除/申述 订单
 
-**请求路径：** `/couriers/{user_id}/{order_id}/resident_handle`
+**请求路径：** `/couriers/{user_id}/{order_id}/handle_order`
 
-**请求方法：** GET
+**请求方法：** POST (申述不填申述原因，已确认)
 
 **参数说明：**
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-handle_type  | string | 是 | 处理(delete 删除 / allege 申述)
+type  | string | 是 | 处理(DELETE 删除 / ALLEGE 申述)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -329,15 +356,11 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
-id | int | 订单编号
-order_image | string | 订单小票图片
-recipient_phone | string | 收货人电话
-recipient_address | string | 收货人地址
-amount | float | 货品价值
-delivery_freight | float | 配送费
-created_at | string | 创建时间
-enroute_at | string | 配送送达时间
-status | string | 订单状态 见注释
+courier_id | int | 配送员ID
+courier_name | string | 配送员姓名
+courier_mobile | string | 配送员手机号码
+order_num | string | 配送员总的待确认订单数
+order_money_sum | float | 配送员总的待确认订单运费金额
 
 **返回示例：**
 
@@ -372,8 +395,8 @@ status | string | 订单状态 见注释
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-recipient_phone  | string | 是 | 收货人手机号码(搜索)
-page_no  | int | 是 | 页码
+recipient_phone  | string | 否 | 收货人手机号码(搜索)
+page  | int | 是 | 页码
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -384,11 +407,15 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 类型 | 示例及描述
 ----- | --- | ---------
-courier_id | int | 配送员ID
-courier_name | string | 配送员姓名
-courier_mobile | string | 配送员手机
-order_num | int | 配送员总单数
-order_money_sum | int | 配送员总配送费
+id | int | 订单编号
+order_image | string | 订单小票图片
+recipient_phone | string | 收货人电话
+recipient_address | string | 收货人地址
+amount | float | 货品价值
+delivery_freight | float | 配送费
+created_at | string | 创建时间
+enrouted_at | string | 配送送达时间
+status | string | 订单状态 见注释
 
 **返回示例：**
 
@@ -404,7 +431,7 @@ order_money_sum | int | 配送员总配送费
                 recipient_address: '东方路1000号',
                 amount: 30,
                 delivery_freight: 5,
-                enroute_at: '2015-07-05 12:46:00',
+                enrouted_at: '2015-07-05 12:46:00',
                 status: ''
             },
             {
@@ -415,7 +442,7 @@ order_money_sum | int | 配送员总配送费
                 recipient_address: '淞沪路100号',
                 amount: 20,
                 delivery_freight: 3,
-                enroute_at: '2015-07-06 12:00:00',
+                enrouted_at: '2015-07-06 12:00:00',
                 status: ''
             }
         ]
@@ -423,7 +450,7 @@ order_money_sum | int | 配送员总配送费
 
 ### 4. 商户确认/拒绝订单(可批量)
 
-**请求路径：** `/stores/{store_id}/resident_confirm`
+**请求路径：** `/stores/{store_id}/handle_order`
 
 **请求方法：** GET
 
@@ -432,7 +459,7 @@ order_money_sum | int | 配送员总配送费
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
 order_id | string | 是 | 订单ID，逗号分隔
-handle_type | string | 是 | 操作类型( REJECT / PASS )
+type | string | 是 | 操作类型( REJECT / PASS )
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -453,8 +480,8 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 状态 | 描述
 ----- | --- | ---------
-PUBLISHED | 配送中 | 订单已经发布，还没确认送达
+ENROUTE | 配送中 | 订单已经发布，还没确认送达
 COMMITED | 待完善 | 已确认送达，还没有完善订单信息
 CONFIRMED | 待商户确认 | 已经完善订单信息，商户还没有确认
-REJECT | 商户拒绝 | 商户审核完成之后，拒绝订单
-PASSED | 商户通过 | 商户审核完成之后，通过订单
+REJECTED | 商户拒绝 | 商户审核完成之后，拒绝订单
+FINISHED | 商户通过 | 商户审核完成之后，通过订单
