@@ -232,7 +232,7 @@ signature  | string | 是 | hmac sha1 计算签名
     }
 
 
-### 5. 完善订单信息
+### 6. 完善订单信息
 
 **请求路径：** `/couriers/{user_id}/{order_id}/residnet_commit`
 
@@ -258,7 +258,7 @@ signature  | string | 是 | hmac sha1 计算签名
     }
 
 
-### 6. 订单申述
+### 7. 订单申述
 
 **请求路径：** `/couriers/{user_id}/{order_id}/resident_allege`
 
