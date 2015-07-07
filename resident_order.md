@@ -57,8 +57,8 @@ money | string | 总收入(1000元/1.2万)
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-courier_lng | string | 是 | 经度
-courier_lat | string | 是 | 纬度
+user_lng | string | 是 | 经度
+user_lat | string | 是 | 纬度
 order_data | string | 是 | json数组(编辑时传入ID即可)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
@@ -92,19 +92,7 @@ recipient_phone | string | 收货人电话
 
     {
         code: 0,
-        message: 'ok',
-        result: [
-            {
-                id: 2,
-                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
-                recipient_phone: '13701816554'
-            },
-            {
-                id: 1,
-                order_image: 'http://img.51diansong.com/media/images/cb/cbb7ff32d535ae0c4423b2e020a9680ccaf654ae.jpg',
-                recipient_phone: '13701816555'
-            }
-        ]
+        message: 'ok'
     }
 
 
@@ -190,8 +178,8 @@ count | int | 该分类下订单数量
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-courier_lng | string | 是 | 经度
-courier_lat | string | 是 | 纬度
+user_lng | string | 是 | 经度
+user_lat | string | 是 | 纬度
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -216,8 +204,8 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-courier_lng | string | 是 | 经度
-courier_lat | string | 是 | 纬度
+user_lng | string | 是 | 经度
+user_lat | string | 是 | 纬度
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
