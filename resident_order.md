@@ -180,7 +180,7 @@ count | int | 该分类下订单数量
     }
 
 
-### 4. 删除配送中订单
+### 4. 删除订单
 
 **请求路径：** `/couriers/{user_id}/{order_id}/resident_delete`
 
@@ -258,9 +258,9 @@ signature  | string | 是 | hmac sha1 计算签名
     }
 
 
-### 6. 删除/申述 订单
+### 6. 订单申述
 
-**请求路径：** `/couriers/{user_id}/{order_id}/handle_order`
+**请求路径：** `/couriers/{user_id}/{order_id}/allege_order`
 
 **请求方法：** POST (申述不填申述原因，已确认)
 
@@ -268,7 +268,6 @@ signature  | string | 是 | hmac sha1 计算签名
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-type  | string | 是 | 处理(DELETE 删除 / ALLEGE 申述)
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
 nonce | int | 是 | 随机正整数
@@ -483,6 +482,16 @@ signature  | string | 是 | hmac sha1 计算签名
 参数名 | 状态 | 描述
 ----- | --- | ---------
 ENROUTE | 配送中 | 订单已经发布，还没确认送达
+COMMITED | 待完善 | 已确认送达，还没有完善订单信息
+CONFIRMED | 待商户确认 | 已经完善订单信息，商户还没有确认
+REJECTED | 商户拒绝 | 商户审核完成之后，拒绝订单
+FINISHED | 商户通过 | 商户审核完成之后，通过订单
+
+## 驻店关系表 status 说明
+
+参数名 | 状态 | 描述
+----- | --- | ---------
+normal | 配送中 | 订单已经发布，还没确认送达
 COMMITED | 待完善 | 已确认送达，还没有完善订单信息
 CONFIRMED | 待商户确认 | 已经完善订单信息，商户还没有确认
 REJECTED | 商户拒绝 | 商户审核完成之后，拒绝订单
