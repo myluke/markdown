@@ -358,7 +358,36 @@ open | int | 1开放，0关闭
     }
 
 
+### 7. 首次充值免运费是否开放
 
+**请求路径：** `/stores/{store_id}/money_week_flag`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+open | int | 1开放，0关闭
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: {
+            open: 1
+        }
+    }
 
 
 
