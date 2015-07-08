@@ -382,7 +382,7 @@ order_money_sum | float | 配送员总的待确认订单运费金额
 
 参数名 | 类型 | 必选 | 示例及描述
 ----- | ---- | --- | ---------
-recipient_phone  | string | 否 | 收货人手机号码(搜索)
+mobile  | string | 否 | 收货人手机号码(搜索)
 page  | int | 是 | 页码
 token  | string | 是 | 用户令牌
 app_id | string | 是 | app id，系统分配
@@ -417,7 +417,7 @@ status | string | 订单状态 见注释
                 created_at: '2015-07-06 11:11:11',
                 recipient_address: '东方路1000号',
                 amount: 30,
-                delivery_freight: 5,
+                delivery_freight: 3,
                 commit_at: '2015-07-05 12:46:00',
                 status: ''
             },

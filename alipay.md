@@ -385,7 +385,8 @@ open | int | 1开放，0关闭
         code: 0,
         message: 'ok',
         result: {
-            open: 1
+            open: 1,
+            desc: '首次充值赠送10次免单'
         }
     }
 
