@@ -126,7 +126,7 @@ recipient_address | string | 收货人地址
 amount | float | 货品价值
 delivery_freight | float | 配送费
 created_at | string | 创建时间
-commit_at | string | 配送送达时间
+commit_at | string | 送达时间
 status | string | 订单状态 见注释
 allege_result | string | 申述结果（申述信息）
 count | int | 该分类下订单数量
