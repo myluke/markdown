@@ -268,6 +268,41 @@ signature  | string | 是 | hmac sha1 计算签名
         message: 'ok'
     }
 
+### 8. 获取是否为驻店配送员
+
+**请求路径：** `/couriers/{user_id}/global_config`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+resident | int | 是否为驻店配送员 1是0否
+
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: {
+            resident: 1
+        }
+    }
+
+
 ## 商户端
 
 ### 1. 驻店人员信息
@@ -492,6 +527,44 @@ count | int | 数量
             count: 16
         }
     }
+
+### 6. 获取是否为驻店商户
+
+**请求路径：** `/stores/{stores_id}/global_config`
+
+**请求方法：** GET
+
+**参数说明：**
+
+参数名 | 类型 | 必选 | 示例及描述
+----- | ---- | --- | ---------
+token  | string | 是 | 用户令牌
+app_id | string | 是 | app id，系统分配
+nonce | int | 是 | 随机正整数
+timestamp  | int | 是 | 请求时间戳
+signature  | string | 是 | hmac sha1 计算签名
+
+
+**返回值说明：**
+
+参数名 | 类型 | 示例及描述
+----- | --- | ---------
+resident | int | 是否为驻店配送员 1是0否
+open | int | 是否开放在线支付显示(IOS专用) 1是0否
+
+
+**返回示例：**
+
+    {
+        code: 0,
+        message: 'ok',
+        result: {
+            resident: 1,
+            open: 0
+        }
+    }
+
+
 
 
 
