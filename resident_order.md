@@ -220,7 +220,7 @@ signature  | string | 是 | hmac sha1 计算签名
 
 ### 6. 完善订单信息
 
-**请求路径：** `/couriers/{user_id}/{order_id}/residnet_commit`
+**请求路径：** `/couriers/{user_id}/{order_id}/resident_commit`
 
 **请求方法：** POST
 
