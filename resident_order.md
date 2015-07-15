@@ -472,7 +472,7 @@ status | string | 订单状态 见注释
 
 ### 4. 商户确认/拒绝订单(可批量)
 
-**请求路径：** `/stores/{store_id}/handle_order`
+**请求路径：** `/stores/{store_id}/resident_handle`
 
 **请求方法：** POST
 
